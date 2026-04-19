@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Speech Emotion Recognition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f7f7fb;
+            color: #1f2937;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+        }
+
+        .left-panel {
+            padding: 40px;
+            background:
+                radial-gradient(circle at top left, rgba(130, 88, 255, 0.45), transparent 35%),
+                radial-gradient(circle at center, rgba(217, 70, 239, 0.24), transparent 30%),
+                linear-gradient(180deg, #f4efff 0%, #ffffff 65%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo {
+            width: fit-content;
+            padding: 14px 18px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #6d5dfc, #d946ef);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 10px 24px rgba(109, 93, 252, 0.28);
+        }
+
+        .hero-content {
+            max-width: 560px;
+            margin-top: 40px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.9rem;
+            line-height: 1.1;
+            margin-bottom: 18px;
+            color: #111827;
+        }
+
+        .hero-content p {
+            font-size: 1.03rem;
+            color: #5b6475;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .hero-points {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            max-width: 520px;
+        }
+
+        .point {
+            background: rgba(255,255,255,0.72);
+            border: 1px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 10px 25px rgba(31, 41, 55, 0.06);
+        }
+
+        .point h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .point p {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: #667085;
+        }
+
+        .mock-card {
+            margin-top: 30px;
+            background: rgba(255,255,255,0.74);
+            border: 1px solid rgba(255,255,255,0.9);
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(109, 93, 252, 0.12);
+            max-width: 620px;
+        }
+
+        .mock-top {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: #ffffff;
+            color: #374151;
+            border: 1px solid #ede9fe;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .mock-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .mini-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 8px 18px rgba(31, 41, 55, 0.05);
+        }
+
+        .mini-card h4 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .bars {
+            display: flex;
+            align-items: end;
+            gap: 8px;
+            height: 120px;
+            margin-top: 12px;
+        }
+
+        .bars span {
+            display: block;
+            flex: 1;
+            border-radius: 8px 8px 0 0;
+            background: linear-gradient(180deg, #8b5cf6, #c084fc);
+        }
+
+        .bars span:nth-child(1) { height: 45px; }
+        .bars span:nth-child(2) { height: 88px; }
+        .bars span:nth-child(3) { height: 66px; }
+        .bars span:nth-child(4) { height: 102px; }
+        .bars span:nth-child(5) { height: 58px; }
+
+        .right-panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: #ffffff;
+        }
+
+        .form-box {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .form-box h2 {
+            font-size: 2.3rem;
+            line-height: 1.15;
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .sub {
+            color: #6b7280;
+            margin-bottom: 26px;
+            font-size: 1rem;
+        }
+
+        .error-box {
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            color: #be123c;
+            padding: 12px 14px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 0.93rem;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.94rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #ddd6fe;
+            border-radius: 14px;
+            background: #ffffff;
+            font-size: 0.97rem;
+            color: #111827;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #a855f7;
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.10);
+        }
+
+        .field-error {
+            margin-top: 6px;
+            font-size: 0.88rem;
+            color: #be123c;
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            padding: 15px 18px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(135deg, #7c3aed, #d946ef);
+            box-shadow: 0 14px 28px rgba(124, 58, 237, 0.24);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+        }
+
+        .bottom-text {
+            margin-top: 18px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        .bottom-text a {
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 992px) {
+            .page {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel,
+            .right-panel {
+                padding: 24px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-points,
+            .mock-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="left-panel">
+            <div>
+                <div class="logo">Speech Emotion Recognition</div>
+
+                <div class="hero-content">
+                    <h1>Create your account to begin speech emotion analysis</h1>
+                    <p>
+                        Sign up to access the system and continue with prediction.
+                        The platform is designed to keep the process simple, clear, and professional.
+                    </p>
+
+                    <div class="hero-points">
+                        <div class="point">
+                            <h3>Simple Signup</h3>
+                            <p>Create an account quickly and continue into the project workflow.</p>
+                        </div>
+                        <div class="point">
+                            <h3>Prediction Ready</h3>
+                            <p>After signup, you can log in and access the prediction page.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mock-card">
+                    <div class="mock-top">
+                        <div class="chip">Sign Up</div>
+                        <div class="chip">Login</div>
+                        <div class="chip">Prediction</div>
+                    </div>
+
+                    <div class="mock-grid">
+                        <div class="mini-card">
+                            <h4>Workflow</h4>
+                            <p style="color:#6b7280;font-size:0.92rem;">Create account, log in, and start prediction.</p>
+                            <div class="bars">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <h4>Access</h4>
+                            <p style="color:#6b7280;font-size:0.95rem;line-height:1.7;">
+                                Secure user access helps organize signup, login, and prediction steps.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="form-box">
+                <h2>Sign Up</h2>
+                <p class="sub">Create your account to continue.</p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="error-box">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}">Username</label>
+                        {{ form.username }}
+                        {% for error in form.username.errors %}
+                            <div class="field-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.password1.id_for_label }}">Password</label>
+                        {{ form.password1 }}
+                        {% for error in form.password1.errors %}
+                            <div class="field-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                        {{ form.password2 }}
+                        {% for error in form.password2.errors %}
+                            <div class="field-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+
+                <div class="bottom-text">
+                    Already have an account? <a href="{% url 'login' %}">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
